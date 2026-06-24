@@ -1,13 +1,13 @@
-package service.bloodbankservice.bloodbankservice;
+package services.communicationservice.communicationservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BloodbankserviceApplicationTests {
+class CommunicationserviceApplicationTests {
 
-	@Test 
+	@Test
 	void contextLoads() {
-
 	}
+
 }
