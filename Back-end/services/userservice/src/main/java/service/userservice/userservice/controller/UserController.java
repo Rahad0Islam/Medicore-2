@@ -90,7 +90,7 @@ public class UserController {
                     "message", "Forbidden: Only patients can search doctors."));
         }
 
-        //String specFilter = normalizeFilter(specialization);
+        String specFilter = normalizeFilter(specialization);
         //String locFilter = normalizeFilter(location);
 
         //List<DoctorProfile> doctors = doctorRepo.searchApprovedDoctors(specFilter, locFilter);
