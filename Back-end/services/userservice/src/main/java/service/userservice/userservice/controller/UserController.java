@@ -84,11 +84,11 @@ public class UserController {
     public ResponseEntity<?> searchDoctors(
             @RequestParam(required = false) String specialization,
             @RequestParam(required = false) String location) {
-        /*if (isNotPatient()) {
+        if (isNotPatient()) {
             return ResponseEntity.status(403).body(Map.of(
                     "success", false,
                     "message", "Forbidden: Only patients can search doctors."));
-        }*/
+        }
 
         //String specFilter = normalizeFilter(specialization);
         //String locFilter = normalizeFilter(location);
