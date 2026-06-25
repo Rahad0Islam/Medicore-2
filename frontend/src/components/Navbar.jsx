@@ -1,5 +1,4 @@
 // src/components/Navbar.jsx
-
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import logo from "../assets/medicoreLogo.png";
@@ -11,6 +10,26 @@ const ROLE_LABELS = {
   admin:      "Admin",
 };
 
+// Role-specific nav links shown in the navbar
+const ROLE_LINKS = {
+  patient: [
+    { to: "/patient",              label: "Dashboard" },
+    { to: "/patient/book",         label: "Book" },
+    { to: "/patient/prescriptions",label: "Prescriptions" },
+    { to: "/patient/chat",         label: "Chat" },
+    { to: "/patient/donors",       label: "Blood Donors" },
+  ],
+  doctor: [
+    { to: "/doctor", label: "Dashboard" },
+  ],
+  pharmacist: [
+    { to: "/pharmacist", label: "Dashboard" },
+  ],
+  admin: [
+    { to: "/admin", label: "Dashboard" },
+  ],
+};
+
 export default function Navbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -20,18 +39,51 @@ export default function Navbar() {
     navigate("/login");
   }
 
+  const links = user ? (ROLE_LINKS[user.role] ?? []) : [];
+
   return (
     <nav className="mc-nav">
       <div className="container mc-nav-inner">
 
-        {/* Logo — image replaces the placeholder "M" mark */}
+        {/* Logo */}
         <Link to={user ? `/${user.role}` : "/"} className="mc-logo">
           <img
             src={logo}
-            alt="MediCore — Healthcare, Coordinated."
-            style={{ height: 100, width: "auto"}}
+            alt="MediCore"
+            style={{ height: 40, width: "auto", objectFit: "contain" }}
           />
         </Link>
+
+        {/* Role nav links */}
+        {links.length > 0 && (
+          <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+            {links.map((l) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                style={{
+                  fontSize: 13,
+                  fontWeight: 500,
+                  color: "var(--text-muted)",
+                  textDecoration: "none",
+                  padding: "6px 10px",
+                  borderRadius: "var(--radius-sm)",
+                  transition: "color 0.15s, background 0.15s",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = "var(--accent)";
+                  e.currentTarget.style.background = "var(--accent-light)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = "var(--text-muted)";
+                  e.currentTarget.style.background = "transparent";
+                }}
+              >
+                {l.label}
+              </Link>
+            ))}
+          </div>
+        )}
 
         {/* Right side */}
         <div className="mc-nav-actions">
