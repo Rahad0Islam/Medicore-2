@@ -5,6 +5,31 @@ import Navbar from "../../components/Navbar";
 import { useAuth } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 
+function ProfilePrompt() {
+  return (
+    <div
+      className="card-sm"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: 16,
+        marginBottom: 24,
+        flexWrap: "wrap",
+        borderColor: "var(--accent)",
+        background: "var(--accent-light)",
+      }}
+    >
+      <span style={{ fontSize: 13, color: "var(--accent-dark)" }}>
+        Patients can't find or book you until your specialization, location, and fee are set.
+      </span>
+      <Link to="/doctor/profile" className="btn btn-primary btn-sm">
+        Set up profile
+      </Link>
+    </div>
+  );
+}
+
 export default function DoctorDashboard() {
   const { user } = useAuth();
   const [incomplete, setIncomplete] = useState([]);
@@ -78,6 +103,7 @@ export default function DoctorDashboard() {
         <h2>Welcome, Dr. {user?.name}</h2>
         <p className="text-muted">Your appointment queue</p>
 
+        <ProfilePrompt />
         {loading && <p>Loading...</p>}
         {error && <div className="alert alert-danger">{error}</div>}
 

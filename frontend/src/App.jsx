@@ -6,6 +6,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
 
 // Patient pages
 import PatientDashboard from "./pages/patient/PatientDashboard";
@@ -89,12 +90,16 @@ export default function App() {
             <Route path="/doctor/patient/:patientId" element={
               <ProtectedRoute allowedRoles={["doctor"]}><PatientHistory /></ProtectedRoute>
             } />
-
+            <Route path="/doctor/profile" element={
+              <ProtectedRoute allowedRoles={["doctor"]}><Profile /></ProtectedRoute>
+            } />
             {/* Pharmacist */}
             <Route path="/pharmacist" element={
               <ProtectedRoute allowedRoles={["pharmacist"]}><PharmacistDashboard /></ProtectedRoute>
             } />
-
+            <Route path="/pharmacist/profile" element={
+              <ProtectedRoute allowedRoles={["pharmacist"]}><Profile /></ProtectedRoute>
+            } />
             {/* Admin */}
             <Route path="/admin" element={
               <ProtectedRoute allowedRoles={["admin"]}><AdminDashboard /></ProtectedRoute>

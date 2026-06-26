@@ -37,6 +37,7 @@ export const ENDPOINTS = {
 
   // Admin
   approveDoctor: (doctorId) => `/admin/approve-doctor/${doctorId}`,
+  adminStats: "/user/admin/dashboard/stats",
 
   // Pharmacist
   medicines: "/pharmacist/medicines",

@@ -21,9 +21,11 @@ const ROLE_LINKS = {
   ],
   doctor: [
     { to: "/doctor", label: "Dashboard" },
+    { to: "/doctor/profile", label: "Profile" },
   ],
   pharmacist: [
     { to: "/pharmacist", label: "Dashboard" },
+    { to: "/pharmacist/profile", label: "Profile" },
   ],
   admin: [
     { to: "/admin", label: "Dashboard" },
