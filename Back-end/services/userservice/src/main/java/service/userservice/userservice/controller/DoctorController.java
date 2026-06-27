@@ -37,6 +37,43 @@ public class DoctorController {
         ));
     }
 
+    @GetMapping("/prescriptions/{id}")
+    public ResponseEntity<?> getPrescription(@PathVariable String id) {
+        // 1. Role Validation
+        if (isNotDoctor()) return forbiddenResponse();
+
+        // 2. Process Request
+        return prescRepo.findById(id)
+                .<ResponseEntity<?>>map(p -> ResponseEntity.ok(Map.of(
+                        "success", true,
+                        "data", p
+                )))
+                .orElse(ResponseEntity.status(404).body(Map.of(
+                        "success", false,
+                        "message", "Prescription not found."
+                )));
+    }
+
+    @PutMapping("/appointments/{serialNo}/complete")
+    public ResponseEntity<?> completeAppointment(@PathVariable Long serialNo) {
+        // 1. Role Validation
+        if (isNotDoctor()) return forbiddenResponse();
+
+        // 2. Process Request
+        return apptRepo.findById(serialNo).<ResponseEntity<?>>map(a -> {
+            a.setIsComplete(true);
+            apptRepo.save(a);
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
+                    "message", "Appointment marked complete.",
+                    "data", a
+            ));
+        }).orElse(ResponseEntity.status(404).body(Map.of(
+                "success", false,
+                "message", "Appointment not found."
+        )));
+    }
+
     @PutMapping("/prescriptions/{id}")
     public ResponseEntity<?> writePrescription(@PathVariable String id, @RequestBody Prescription payload) {
         // 1. Role Validation

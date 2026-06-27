@@ -299,7 +299,7 @@ export default function PharmacistDashboard() {
     setLoading(true);
     setError("");
     try {
-      const medsRes = await apiRequest(ENDPOINTS.medicines, { method: "GET" });
+      const medsRes = await apiRequest(ENDPOINTS.medicines, { method: "GET", auth: true });
       // Response shape may be { data: [...] } or [...] — normalise.
       const list = Array.isArray(medsRes) ? medsRes : (medsRes?.data ?? []);
       setMedicines(list);
@@ -314,7 +314,7 @@ export default function PharmacistDashboard() {
 
   useEffect(() => {
     // Pharmacy profile is best-effort — absence shouldn't break the page.
-    apiRequest(ENDPOINTS.profile, { method: "GET" })
+    apiRequest(ENDPOINTS.profile, { method: "GET", auth: true })
       .then((res) => setPharmacy(res?.data ?? null))
       .catch(() => {});
   }, []);
@@ -357,12 +357,14 @@ export default function PharmacistDashboard() {
         await apiRequest(ENDPOINTS.medicineById(editing.medicine_id), {
           method: "PUT",
           body: payload,
+          auth: true,
         });
         flashToast(`${payload.name} updated.`);
       } else {
         await apiRequest(ENDPOINTS.medicines, {
           method: "POST",
           body: payload,
+          auth: true,
         });
         flashToast(`${payload.name} added to inventory.`);
       }
@@ -382,6 +384,7 @@ export default function PharmacistDashboard() {
       await apiRequest(ENDPOINTS.medicineById(med.medicine_id), {
         method: "PUT",
         body: { ...med, stock: Math.max(0, Number(med.stock) - 1) },
+        auth: true,
       });
       flashToast(`Dispensed 1 × ${med.name}.`);
       await load();
@@ -393,7 +396,7 @@ export default function PharmacistDashboard() {
   const remove = async (med) => {
     if (!window.confirm(`Remove "${med.name}" from inventory?`)) return;
     try {
-      await apiRequest(ENDPOINTS.medicineById(med.medicine_id), { method: "DELETE" });
+      await apiRequest(ENDPOINTS.medicineById(med.medicine_id), { method: "DELETE", auth: true });
       flashToast(`${med.name} removed.`);
       await load();
     } catch (err) {
