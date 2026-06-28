@@ -28,6 +28,13 @@ function stockState(stock) {
   return            { key: "ok",  label: `${n} in stock` };
 }
 
+// Backend serializes medicine name as `medicine_name` (canonical)
+// but accepts `name` / `medicineName` on input. Anywhere the frontend
+// reads a medicine row, normalize via this helper so both old and new
+// rows render the name.
+const readMedName = (m) =>
+  m?.medicine_name || m?.name || m?.medicineName || "";
+
 const EMPTY_FORM = {
   name: "",
   category: "",
@@ -98,9 +105,10 @@ function MetricTile({ tone, icon, label, value, loading }) {
 
 function MedicineRow({ med, onEditDetails, onUpdateStock, onDelete }) {
   const st = stockState(med.quantity);
-  const hue = hueForId(med.medicineId || med.name);
+  const name = readMedName(med);
+  const hue = hueForId(med.medicineId || name);
   const outOfStock = st.key === "out";
-  const displayName = med.name && med.name.trim().length > 0 ? med.name : <em style={{ color: "var(--text-muted)" }}>(unnamed)</em>;
+  const displayName = name && name.trim().length > 0 ? name : <em style={{ color: "var(--text-muted)" }}>(unnamed)</em>;
 
   return (
     <li className="doctor-appt-row">
@@ -109,7 +117,7 @@ function MedicineRow({ med, onEditDetails, onUpdateStock, onDelete }) {
         style={{ background: `hsl(${hue}, 55%, 88%)`, color: `hsl(${hue}, 45%, 30%)` }}
         aria-hidden
       >
-        {initialsOf(med.name || med.medicineId)}
+        {initialsOf(name || med.medicineId)}
       </div>
 
       <div className="doctor-appt-body">
@@ -318,7 +326,7 @@ function StockModal({ open, med, onClose, onSave, saving }) {
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal-card" onClick={(e) => e.stopPropagation()}>
         <div className="modal-head">
-          <h3 className="modal-title">Update stock — {med.name || med.medicineId}</h3>
+            <h3 className="modal-title">Update stock — {readMedName(med) || med.medicineId}</h3>
           <button type="button" className="modal-close" onClick={onClose} aria-label="Close">
             ×
           </button>
@@ -410,7 +418,7 @@ function InventoryTab({
     const q = query.trim().toLowerCase();
     if (!q) return medicines;
     return medicines.filter((m) =>
-      [m.name, m.category, m.manufacturer].some(
+      [readMedName(m), m.category, m.manufacturer].some(
         (v) => v && String(v).toLowerCase().includes(q)
       )
     );
@@ -750,7 +758,7 @@ export default function PharmacistDashboard() {
           body: payload,
           auth: true,
         });
-        flashToast(`${payload.name} updated.`);
+        flashToast(`${payload.name || readMedName(editing)} updated.`);
       } else {
         await apiRequest(ENDPOINTS.medicines, {
           method: "POST",
@@ -771,10 +779,11 @@ export default function PharmacistDashboard() {
   const updateStock = async (medWithNewQty) => {
     setSaving(true);
     try {
+      const name = medWithNewQty.name || readMedName(medWithNewQty);
       await apiRequest(ENDPOINTS.medicineById(medWithNewQty.medicineId), {
         method: "PUT",
         body: {
-          name:    medWithNewQty.name,
+          name:    name,
           price:   medWithNewQty.price,
           stock:   medWithNewQty.quantity,
           category:        medWithNewQty.category,
@@ -783,7 +792,7 @@ export default function PharmacistDashboard() {
         },
         auth: true,
       });
-      flashToast(`Stock for ${medWithNewQty.name} → ${medWithNewQty.quantity}.`);
+      flashToast(`Stock for ${name} → ${medWithNewQty.quantity}.`);
       setStockOpen(false);
       await load();
     } catch (err) {
@@ -794,10 +803,11 @@ export default function PharmacistDashboard() {
   };
 
   const remove = async (med) => {
-    if (!window.confirm(`Remove "${med.name}" from inventory?`)) return;
+    const name = readMedName(med);
+    if (!window.confirm(`Remove "${name}" from inventory?`)) return;
     try {
       await apiRequest(ENDPOINTS.medicineById(med.medicineId), { method: "DELETE", auth: true });
-      flashToast(`${med.name} removed.`);
+      flashToast(`${name} removed.`);
       await load();
     } catch (err) {
       flashToast(err.message || "Delete failed.");
