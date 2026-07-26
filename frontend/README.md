@@ -62,5 +62,6 @@ Routes are role-gated through `ProtectedRoute`, so a patient cannot reach `/admi
 The visual direction is meant to stay minimal: white cards, a single accent color per role, no unnecessary shadows or gradients. Before adding a new page, check `index.css` for an existing class rather than writing new styles. Most patterns already used across the app, such as list pages, forms, modals, and card grids, are meant to be reused rather than recreated for each new page.
 
 ##Deployment
+## Deployment
 
 This project is deployed on Vercel.
