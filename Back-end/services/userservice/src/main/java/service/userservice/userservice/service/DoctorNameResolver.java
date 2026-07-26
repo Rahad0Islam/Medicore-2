@@ -22,7 +22,7 @@ public class DoctorNameResolver {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @Value("${gateway.base-url:http://localhost:8000}")
+    @Value("${gateway.base-url:https://medicore-2-production-9c26.up.railway.app/}") //api-gateway base url
     private String gatewayBaseUrl;
 
     private final Map<String, String> cache = new ConcurrentHashMap<>();

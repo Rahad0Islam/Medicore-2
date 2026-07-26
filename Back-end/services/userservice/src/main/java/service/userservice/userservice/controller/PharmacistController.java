@@ -120,7 +120,7 @@ public class PharmacistController {
         try {
             @SuppressWarnings("rawtypes")
             ResponseEntity<Map> resp = restTemplate.getForEntity(
-                "http://localhost:8001/api/v1/auth/email/" + email.trim(),
+                "https://medicore-2-production.up.railway.app/api/v1/auth/email/" + email.trim(),
                 Map.class
             );
             @SuppressWarnings("unchecked")
@@ -200,7 +200,7 @@ public class PharmacistController {
         try {
             @SuppressWarnings("rawtypes")
             ResponseEntity<Map> userResp = restTemplate.getForEntity(
-                "http://localhost:8001/api/v1/auth/user/" + patientId,
+                "https://medicore-2-production.up.railway.app/api/v1/auth/user/" + patientId,
                 Map.class
             );
             @SuppressWarnings("unchecked")

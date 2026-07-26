@@ -199,7 +199,7 @@ public class UserController {
             String doctorName = "Unknown Doctor";
             if (finalJwtToken != null) {
                 try {
-                    String authServiceUrl = "http://localhost:8001/api/v1/auth/user/" + doctor.getUserId();
+                    String authServiceUrl = "https://medicore-2-production.up.railway.app/api/v1/auth/user/" + doctor.getUserId();
                     ResponseEntity<Map> response = restTemplate.exchange(
                             authServiceUrl,
                             HttpMethod.GET,

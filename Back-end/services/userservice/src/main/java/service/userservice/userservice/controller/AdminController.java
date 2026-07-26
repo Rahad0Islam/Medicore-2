@@ -155,7 +155,7 @@ public class AdminController {
 
         try {
             ResponseEntity<Map> response = restTemplate.exchange(
-                    "http://localhost:8001/api/v1/internal/all-users",
+                    "https://medicore-2-production.up.railway.app/api/v1/internal/all-users",
                     HttpMethod.GET,
                     requestEntity,
                     Map.class
@@ -192,7 +192,7 @@ public class AdminController {
 
         try {
             ResponseEntity<Map> response = restTemplate.exchange(
-                    "http://localhost:8001/api/v1/internal/users/" + id + "/role",
+                    "https://medicore-2-production.up.railway.app/api/v1/internal/users/" + id + "/role",
                     HttpMethod.PATCH,
                     req,
                     Map.class
@@ -224,7 +224,7 @@ public class AdminController {
 
         try {
             ResponseEntity<Map> response = restTemplate.exchange(
-                    "http://localhost:8001/api/v1/internal/users/" + id,
+                    "https://medicore-2-production.up.railway.app/api/v1/internal/users/" + id,
                     HttpMethod.DELETE,
                     req,
                     Map.class
@@ -266,7 +266,7 @@ public class AdminController {
             String doctorEmail = "";
             try {
                 ResponseEntity<Map> response = restTemplate.exchange(
-                        "http://localhost:8001/api/v1/auth/user/" + d.getUserId(),
+                        "https://medicore-2-production.up.railway.app/api/v1/auth/user/" + d.getUserId(),
                         HttpMethod.GET,
                         requestEntity,
                         Map.class

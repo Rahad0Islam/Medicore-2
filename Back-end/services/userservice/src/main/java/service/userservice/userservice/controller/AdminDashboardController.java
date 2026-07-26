@@ -35,7 +35,7 @@ public class AdminDashboardController {
 
         try {
             Map<?, ?> authResponse = restTemplate.getForObject(
-                    "http://localhost:8001/api/v1/internal/user-stats",
+                    "https://medicore-2-production.up.railway.app/api/v1/internal/user-stats",
                     Map.class
             );
 
