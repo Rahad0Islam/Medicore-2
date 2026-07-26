@@ -8,7 +8,7 @@
 // (an abstraction), never on fetch() directly. If we ever swap fetch for
 // axios, or add retry logic, only THIS file changes — no page is touched.
 
-const BASE_URL = "http://localhost:8000/api/v1";
+const BASE_URL = "https://medicore-2-production-9c26.up.railway.app/api/v1";
 
 const TOKEN_KEY = "medicore_token";
 
