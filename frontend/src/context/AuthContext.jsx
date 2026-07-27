@@ -1,15 +1,4 @@
 // src/context/AuthContext.jsx
-//
-// Design pattern: Provider pattern (React's version of Dependency Injection).
-// Instead of every page importing client.js and managing its own copy of
-// "who is logged in", the whole app is wrapped once in <AuthProvider> and
-// any component can ask useAuth() for the current user/token.
-//
-// ISP (Interface Segregation): consumers only ever see
-// { user, login, signup, logout, loading } — five things, nothing about
-// HOW tokens are stored or decoded leaks out to the pages that use it.
-//
-// SRP: this file's only job is auth state. It does not render any UI.
 
 import { createContext, useContext, useState, useEffect } from "react";
 import { apiRequest, setToken, clearToken, getToken } from "../api/client";

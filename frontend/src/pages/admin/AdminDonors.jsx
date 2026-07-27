@@ -1,14 +1,4 @@
 // src/pages/admin/AdminDonors.jsx
-//
-// Admin: oversee the blood-donor registry with blood-group filter and per-row
-// deletion. Mirrors the patient-facing Blooddonor page but with admin powers.
-//
-// Backend endpoints (paths registered in ENDPOINTS):
-//   GET    /bloodbank/admin/donors?bloodGroup=A+   -> all donors, optional filter
-//   DELETE /bloodbank/admin/donors/{bloodBankId}
-//
-// Response shape per row:
-//   { bloodBankId, name, contactNo, donorId, lastdate, bloodgroup }
 
 import { useEffect, useMemo, useState } from "react";
 import Navbar from "../../components/Navbar";

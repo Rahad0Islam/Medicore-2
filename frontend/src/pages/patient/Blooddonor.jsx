@@ -178,7 +178,7 @@ export default function BloodDonor() {
         </div>
 
         {activeTab === "register" && (
-          <div className="tab-panel form-max-width">
+          <div className="tab-panel">
             {statusLoading ? (
               <p className="page-subtitle">Checking your donor status…</p>
             ) : (
@@ -189,7 +189,7 @@ export default function BloodDonor() {
                     <div>
                       <p className="donor-info-strip__label">Donor Status</p>
                       <p className="donor-info-strip__value">
-                        {isEligibleAgain ? "Registered — eligible to donate again" : "Registered — thank you!"}
+                        {isEligibleAgain ? "Registered and eligible to donate again" : "Registered, thank you!"}
                       </p>
                     </div>
                   </div>
@@ -234,7 +234,7 @@ export default function BloodDonor() {
                     </div>
                   </>
                 ) : (
-                  <>
+                  <div className="form-max-width">
                     {isReturningDonor && isEligibleAgain && (
                       <div className="alert alert-success" style={{ marginTop: 12, marginBottom: 4 }}>
                         <i className="bi bi-check-circle-fill" style={{ marginRight: 8 }}></i>
@@ -277,7 +277,7 @@ export default function BloodDonor() {
                           : (isReturningDonor ? "Update Donation Date" : "Register as Donor")}
                       </button>
                     </form>
-                  </>
+                  </div>
                 )}
               </>
             )}
