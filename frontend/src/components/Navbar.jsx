@@ -22,7 +22,6 @@ const ROLE_LINKS = {
   ],
   doctor: [
     { to: "/doctor", label: "Appointments" },
-    { to: "/doctor/patient-history", label: "Patient History" },
     { to: "/doctor/chat", label: "Chat" },
     { to: "/doctor/profile", label: "Profile" },
   ],
@@ -95,6 +94,18 @@ export default function Navbar() {
 
         {/* Right side */}
         <div className="mc-nav-actions">
+          <Link
+            to="/about"
+            style={{
+              fontSize: 13,
+              fontWeight: 500,
+              color: "var(--text-muted)",
+              textDecoration: "none",
+              padding: "6px 10px",
+            }}
+          >
+            About
+          </Link>
           {user ? (
             <>
               <span className="mc-nav-user">{user.name}</span>

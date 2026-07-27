@@ -55,27 +55,40 @@ export default function Home() {
       {/* ── HERO ── */}
       <section className="pub-hero">
         <div className="container">
-          <span className="pub-hero-eyebrow">
-            <i className="bi bi-heart-pulse-fill"></i>
-            Welcome to MediCore
-          </span>
-          <h1 className="pub-hero-title">
-            Healthcare,
-            <br />
-            <span>coordinated.</span>
-          </h1>
-          <p className="pub-hero-sub">
-            Book appointments, manage prescriptions, coordinate pharmacy
-            inventory, and connect with your care team — all in one platform.
-          </p>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <Link to="/signup" className="pub-btn pub-btn-primary">
-              <i className="bi bi-arrow-right-circle"></i>
-              Get started
-            </Link>
-            <Link to="/login" className="pub-btn pub-btn-ghost">
-              Sign in
-            </Link>
+          <div className="pub-hero-grid">
+            <div>
+              <span className="pub-hero-eyebrow">
+                <i className="bi bi-heart-pulse-fill"></i>
+                Welcome to MediCore
+              </span>
+              <h1 className="pub-hero-title">
+                Healthcare,
+                <br />
+                <span>coordinated.</span>
+              </h1>
+              <p className="pub-hero-sub">
+                Book appointments, manage prescriptions, coordinate pharmacy
+                inventory, and connect with your care team — all in one platform.
+              </p>
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                <Link to="/signup" className="pub-btn pub-btn-primary">
+                  <i className="bi bi-arrow-right-circle"></i>
+                  Get started
+                </Link>
+                <Link to="/login" className="pub-btn pub-btn-ghost">
+                  Sign in
+                </Link>
+              </div>
+            </div>
+
+            <div className="pub-hero-icons" aria-hidden="true">
+              <span className="pub-hero-icon pub-hero-icon--1"><i className="bi bi-heart-pulse"></i></span>
+              <span className="pub-hero-icon pub-hero-icon--2"><i className="bi bi-chat-dots"></i></span>
+              <span className="pub-hero-icon pub-hero-icon--3"><i className="bi bi-capsule"></i></span>
+              <span className="pub-hero-icon pub-hero-icon--4"><i className="bi bi-droplet"></i></span>
+              <span className="pub-hero-icon pub-hero-icon--5"><i className="bi bi-shield-check"></i></span>
+              <span className="pub-hero-icon pub-hero-icon--6"><i className="bi bi-file-earmark-medical"></i></span>
+            </div>
           </div>
         </div>
       </section>
@@ -83,8 +96,8 @@ export default function Home() {
       {/* ── STATS ── */}
       <section
         style={{
-          borderTop: "1px solid var(--pub-border)",
-          borderBottom: "1px solid var(--pub-border)",
+          borderTop: "1px solid var(--border)",
+          borderBottom: "1px solid var(--border)",
           padding: "40px 0",
           background: "var(--white)",
         }}
@@ -97,7 +110,7 @@ export default function Home() {
                   style={{
                     fontSize: 36,
                     fontWeight: 600,
-                    color: "var(--pub-green)",
+                    color: "var(--accent-dark)",
                     lineHeight: 1,
                   }}
                 >
@@ -106,7 +119,7 @@ export default function Home() {
                 <div
                   style={{
                     fontSize: 13,
-                    color: "#6B7670",
+                    color: "var(--text-muted)",
                     marginTop: 8,
                     letterSpacing: "0.04em",
                   }}
@@ -144,7 +157,7 @@ export default function Home() {
       <section
         className="pub-section pub-section-alt"
         style={{
-          borderTop: "1px solid var(--pub-border)",
+          borderTop: "1px solid var(--border)",
           textAlign: "center",
         }}
       >
@@ -155,7 +168,7 @@ export default function Home() {
               fontSize: 26,
               fontWeight: 600,
               marginBottom: 12,
-              color: "#1B2420",
+              color: "var(--text)",
             }}
           >
             Ready to get started?
