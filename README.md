@@ -204,6 +204,54 @@ A handful of endpoints in this document, such as the doctor directory search, th
 
 The frontend talks to a single API gateway, which forwards each request to the appropriate microservice based on the request path. Every service reads from and writes to the same PostgreSQL database, hosted on Neon.
 
+## Project File Structure
+
+```text
+Medicore-2/
+├── README.md                          # Main project documentation, setup, API reference, and system overview
+├── SWE_Principles_And_Design_Patterns.md
+│                                       # Software engineering principles and design pattern summary for the course
+├── Back-end/
+│   ├── api-gateway/
+│   │   └── apigateway/
+│   │       ├── src/main/java/...       # Gateway application and CORS/routing configuration
+│   │       └── src/main/resources/     # Gateway properties and runtime configuration
+│   └── services/
+│       ├── authservice/                # Authentication, registration, JWT, and user lookup
+│       │   ├── src/main/java/.../controller   # AuthController and internal auth endpoints
+│       │   ├── src/main/java/.../service      # AuthService business logic
+│       │   ├── src/main/java/.../model        # User entity and related domain objects
+│       │   ├── src/main/java/.../dto          # Request/response transfer objects
+│       │   └── src/main/java/.../repository    # Spring Data repositories
+│       ├── userservice/                # Patient, doctor, pharmacist, and admin workflows
+│       │   ├── controller/             # Role-based controllers for appointments, prescriptions, and management
+│       │   ├── model/                  # Appointment, prescription, profile, and medicine entities
+│       │   ├── repository/             # Data access layer for user-service tables
+│       │   └── config/                 # Security and JWT-related configuration
+│       ├── bloodbankservice/           # Donor registration and blood bank search workflows
+│       │   ├── controller/             # BloodBankController for donor operations
+│       │   ├── model/                  # Blood donor entity
+│       │   ├── repository/             # Donor persistence layer
+│       │   └── config/                 # JWT interceptor and web configuration
+│       └── communicationservice/       # Real-time doctor-patient messaging
+│           ├── controller/             # ChatController for sending and reading chat messages
+│           ├── model/                  # Chat message entity
+│           ├── repository/             # Message storage and query layer
+│           └── config/                 # JWT interceptor and web configuration
+└── frontend/
+   ├── src/
+   │   ├── api/                        # Centralized API client and endpoint constants
+   │   ├── components/                 # Reusable UI pieces like Navbar, Footer, and ProtectedRoute
+   │   ├── context/                    # Global auth state and token/session handling
+   │   ├── pages/                      # Role-based pages for patient, doctor, pharmacist, and admin flows
+   │   ├── App.jsx                     # App-level route composition
+   │   └── main.jsx                    # Frontend entry point
+   ├── public/                         # Static assets
+   └── vite.config.js                  # Vite build and development configuration
+```
+
+This structure shows that the repository is organized by responsibility: documentation at the root, infrastructure and backend services under `Back-end/`, and the React client under `frontend/`.
+
 ## Contributors
 
 | Registration No. | Name | Role |
