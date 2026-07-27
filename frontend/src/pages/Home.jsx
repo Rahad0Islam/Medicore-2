@@ -68,7 +68,7 @@ export default function Home() {
               </h1>
               <p className="pub-hero-sub">
                 Book appointments, manage prescriptions, coordinate pharmacy
-                inventory, and connect with your care team — all in one platform.
+                inventory, and connect with your care team, all in one platform.
               </p>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                 <Link to="/signup" className="pub-btn pub-btn-primary">

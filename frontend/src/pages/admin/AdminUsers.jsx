@@ -1,16 +1,5 @@
 // src/pages/admin/AdminUsers.jsx
-//
-// Admin: full user directory with role-change and delete actions. A search
-// box filters in the client so the table stays usable while the backend
-// gradually adds server-side pagination / search.
-//
-// Backend endpoints (paths registered in ENDPOINTS):
-//   GET    /admin/users                  -> [{ userId, name, email, role, phone, bloodGroup, createdAt }]
-//   PATCH  /admin/users/{id}/role        body: { role }
-//   DELETE /admin/users/{id}
-//
-// Note: admin must NOT be able to delete themselves. We block the delete
-// button when the row's userId matches the logged-in admin's id.
+
 
 import { useEffect, useMemo, useState } from "react";
 import Navbar from "../../components/Navbar";

@@ -1,14 +1,4 @@
 // src/pages/admin/AdminDashboard.jsx
-//
-// Admin overview page: pulls live counts from /user/admin/dashboard/stats
-// (already wired in userservice's AdminDashboardController) and surfaces
-// quick navigation cards to the three sub-pages.
-//
-// Backend assumptions (will gracefully degrade until backend team lands them):
-//   GET  /user/admin/dashboard/stats        -> { data: { patients, doctors,
-//                                                       approvedDoctors,
-//                                                       pendingDoctors,
-//                                                       pharmacists, donors } }
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";

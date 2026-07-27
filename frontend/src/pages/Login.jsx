@@ -85,7 +85,7 @@ export default function Login() {
           </h1>
           <p style={{ fontSize: 14, opacity: 0.75, lineHeight: 1.8, maxWidth: 300 }}>
             Appointments, prescriptions, pharmacy, and direct doctor
-            communication — in one place.
+            communication in one place.
           </p>
         </div>
 

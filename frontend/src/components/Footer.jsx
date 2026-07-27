@@ -1,7 +1,4 @@
 // src/components/Footer.jsx
-//
-// Global site footer. Mounted once in App.jsx (outside <Routes>) so it
-// appears on every page instead of being imported per-page.
 
 import { Link } from "react-router-dom";
 
@@ -55,7 +52,7 @@ export default function Footer() {
         </div>
 
         <div className="mc-footer-bottom">
-          &copy; {new Date().getFullYear()} MediCore — SWE Lab Project. All rights reserved.
+          &copy; {new Date().getFullYear()} MediCore - SWE Lab Project. All rights reserved.
         </div>
       </div>
     </footer>

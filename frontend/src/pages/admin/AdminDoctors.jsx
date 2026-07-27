@@ -1,19 +1,4 @@
 // src/pages/admin/AdminDoctors.jsx
-//
-// Admin: review and approve doctor profiles. Tabs split pending vs approved
-// so the most important column (pending) is one click away.
-//
-// Backend endpoints (paths registered in ENDPOINTS; full implementation lands
-// with the backend team — UI is ready now and degrades gracefully):
-//   GET  /admin/doctors                    -> all doctors (approved + pending)
-//   GET  /admin/doctors/pending            -> only approval=false
-//   GET  /admin/doctors/approved           -> only approval=true
-//   PATCH /admin/approve-doctor/{id}       -> sets approval=true
-//   PATCH /admin/disapprove-doctor/{id}    -> sets approval=false
-//
-// Response shape per row (assumed — backend will return populated `name`):
-//   { doctorId, userId, name, specialization, qualification,
-//     location, visitingFee, rating, approval }
 
 import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
@@ -33,8 +18,7 @@ export default function AdminDoctors() {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  // rowKey -> "approve" | "disapprove" — to disable the right button while
-  // a request is in flight without freezing the whole table
+
   const [busy, setBusy] = useState({});
 
   async function loadDoctors(path) {
@@ -64,8 +48,6 @@ export default function AdminDoctors() {
         ? ENDPOINTS.approveDoctor(doctor.doctorId ?? doctor.userId)
         : ENDPOINTS.disapproveDoctor(doctor.doctorId ?? doctor.userId);
       await apiRequest(path, { method: "PATCH", auth: true });
-      // Optimistic refresh — reload the current tab so the row disappears /
-      // moves to the correct bucket.
       const active = TABS.find((t) => t.key === tab);
       if (active) await loadDoctors(active.path);
     } catch (err) {

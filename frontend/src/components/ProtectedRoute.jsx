@@ -1,15 +1,5 @@
 // src/components/ProtectedRoute.jsx
-//
-// Design pattern: this is a "wrapper"/"guard" component — a very common
-// React pattern for the same problem middleware solves on the backend.
-//
-// SRP: its only job is "should this person see this page or not". It does
-// not know or care what the page itself renders.
-//
-// LSP-style consistency: every page that needs protection wraps the SAME
-// way, regardless of role — <ProtectedRoute allowedRoles={["doctor"]}>.
-// You never need a different kind of guard for a different role; the
-// component behaves identically no matter which roles you pass it.
+
 
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";

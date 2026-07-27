@@ -68,7 +68,7 @@ export default function AboutUs() {
               <div className="pub-mv-card__title">Our Mission</div>
               <p className="pub-mv-card__text">
                 To bring appointments, prescriptions, pharmacy stock, and
-                doctor–patient communication into one coordinated platform,
+                doctor-patient communication into one coordinated platform,
                 so care teams spend less time on paperwork and more time on
                 patients.
               </p>
@@ -78,7 +78,7 @@ export default function AboutUs() {
               <p className="pub-mv-card__text">
                 A future where every clinic, regardless of size, has access
                 to the same digital coordination tools as a large hospital
-                system — simple, role-aware, and built for real workflows.
+                system; simple, role-aware, and built for real workflows.
               </p>
             </div>
           </div>
