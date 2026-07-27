@@ -1,0 +1,64 @@
+<svg viewBox="0 0 920 460" xmlns="http://www.w3.org/2000/svg" font-family="Inter, Helvetica, Arial, sans-serif">
+  <rect x="0" y="0" width="920" height="460" fill="#ffffff"/>
+
+  <!-- Frontend -->
+  <rect x="380" y="20" width="160" height="60" rx="10" fill="#eef6ff" stroke="#2f6feb" stroke-width="1.5"/>
+  <text x="460" y="45" text-anchor="middle" font-size="14" font-weight="600" fill="#173a63">Frontend</text>
+  <text x="460" y="64" text-anchor="middle" font-size="11" fill="#4a6fa5">React · Vite · Vercel</text>
+
+  <!-- Arrow: frontend -> gateway -->
+  <line x1="460" y1="80" x2="460" y2="118" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- API Gateway -->
+  <rect x="360" y="120" width="200" height="64" rx="10" fill="#fff7e6" stroke="#d99a1b" stroke-width="1.5"/>
+  <text x="460" y="147" text-anchor="middle" font-size="14" font-weight="600" fill="#6b4a08">API Gateway</text>
+  <text x="460" y="166" text-anchor="middle" font-size="11" fill="#8a6a1e">Spring Cloud Gateway · :3000</text>
+
+  <!-- Arrows: gateway -> 4 services -->
+  <line x1="460" y1="184" x2="130" y2="238" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="460" y1="184" x2="350" y2="238" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="460" y1="184" x2="570" y2="238" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="460" y1="184" x2="790" y2="238" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Service boxes -->
+  <g>
+    <rect x="30" y="240" width="200" height="64" rx="10" fill="#f1fbf3" stroke="#2f9e58" stroke-width="1.5"/>
+    <text x="130" y="267" text-anchor="middle" font-size="13" font-weight="600" fill="#1b6b38">auth-service</text>
+    <text x="130" y="286" text-anchor="middle" font-size="11" fill="#3f8a5c">:8001 · /api/v1/auth/**</text>
+  </g>
+
+  <g>
+    <rect x="250" y="240" width="200" height="64" rx="10" fill="#f1fbf3" stroke="#2f9e58" stroke-width="1.5"/>
+    <text x="350" y="267" text-anchor="middle" font-size="13" font-weight="600" fill="#1b6b38">user-service</text>
+    <text x="350" y="286" text-anchor="middle" font-size="11" fill="#3f8a5c">:8002 · /api/v1/**</text>
+  </g>
+
+  <g>
+    <rect x="470" y="240" width="200" height="64" rx="10" fill="#f1fbf3" stroke="#2f9e58" stroke-width="1.5"/>
+    <text x="570" y="267" text-anchor="middle" font-size="13" font-weight="600" fill="#1b6b38">bloodbank-service</text>
+    <text x="570" y="286" text-anchor="middle" font-size="11" fill="#3f8a5c">:8003 · /api/v1/bloodbank/**</text>
+  </g>
+
+  <g>
+    <rect x="690" y="240" width="200" height="64" rx="10" fill="#f1fbf3" stroke="#2f9e58" stroke-width="1.5"/>
+    <text x="790" y="267" text-anchor="middle" font-size="13" font-weight="600" fill="#1b6b38">communication-service</text>
+    <text x="790" y="286" text-anchor="middle" font-size="11" fill="#3f8a5c">:8004 · /api/v1/chat/**</text>
+  </g>
+
+  <!-- Arrows: services -> database -->
+  <line x1="130" y1="304" x2="440" y2="368" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="350" y1="304" x2="450" y2="368" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="570" y1="304" x2="470" y2="368" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="790" y1="304" x2="480" y2="368" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Database -->
+  <rect x="360" y="370" width="200" height="64" rx="10" fill="#f5f1fb" stroke="#7c4fd1" stroke-width="1.5"/>
+  <text x="460" y="397" text-anchor="middle" font-size="14" font-weight="600" fill="#4a2d8a">PostgreSQL</text>
+  <text x="460" y="416" text-anchor="middle" font-size="11" fill="#6a4fae">Hosted on Neon</text>
+
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+</svg>
