@@ -15,6 +15,17 @@ MediCore is a multi-service platform built to handle authentication, role-based 
 * **Pharmacist**: Manages medicine stock, prices, and catalog additions.
 * **Admin**: Oversees system compliance, specifically approving or rejecting Doctor registration profiles.
 
+### Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React 18, Vite, React Router, Context API for auth state, plain CSS (no UI framework) |
+| Backend | Java, Spring Boot, Spring Cloud Gateway for service routing |
+| Architecture | Microservices: auth-service, user-service, bloodbank-service, communication-service, behind a single API gateway |
+| Authentication | JWT (JSON Web Token), issued on login and passed via `Authorization: Bearer` header |
+| Database | PostgreSQL, hosted on Neon (NeonDB) |
+| Build tool | Maven |
+| Frontend hosting | Vercel |
 ---
 
 ## Getting Started
@@ -184,3 +195,22 @@ Decoded JWT payload:
 ### A note on newer additions
 
 A handful of endpoints in this document, such as the doctor directory search, the admin dashboard stats, and the "view my appointments" route, were not part of the original contract and were added later as the frontend needed them. If you notice a route here that behaves slightly differently from what you expected, it is worth checking whether it was one of these later additions rather than assuming the original spec is out of date. As the project grows, new endpoints will keep getting added here as they come up, so treat this document as a living reference rather than a fixed one.
+
+---
+
+## Architecture
+
+![MediCore architecture diagram](./docs/architecture.svg)
+
+The frontend talks to a single API gateway, which forwards each request to the appropriate microservice based on the request path. Every service reads from and writes to the same PostgreSQL database, hosted on Neon.
+
+## Contributors
+
+| Registration No. | Name | Role |
+|---|---|---|
+| 2022331053 | Autanu Datta | Backend |
+| 2022331089 | Taposh Ghosh | Backend |
+| 2022331097 | Rahad Islam | Backend |
+| 2022331033 | Shyamali Das | Frontend |
+| 2022331063 | Jannat Bhuiyan | Frontend |
+| 2022331099 | Afia Farzana | Frontend |
