@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Navbar from "../../components/Navbar";
 import { apiRequest, getErrorMessage } from "../../api/client";
 import { ENDPOINTS } from "../../api/endpoints";
@@ -20,91 +20,7 @@ export default function BloodDonor() {
   const [searchError, setSearchError] = useState("");
   const [searchedOnce, setSearchedOnce] = useState(false);
 
-  // Update-date tab state
-  const [myDonation, setMyDonation] = useState(null);
-  const [updateDate, setUpdateDate] = useState("");
-  const [updateLoading, setUpdateLoading] = useState(false);
-  const [updateAlert, setUpdateAlert] = useState({ type: "", message: "" });
-  const [updateLoadingRecord, setUpdateLoadingRecord] = useState(false);
-  const [updateRecordMessage, setUpdateRecordMessage] = useState("");
-
   const [activeTab, setActiveTab] = useState("register");
-  // Tracks whether the initial /me/donation lookup has resolved so the
-  // Register tab doesn't flash the form before we know the user is already
-  // registered.
-  const [registerBootstrapped, setRegisterBootstrapped] = useState(false);
-
-  // Bootstrap: on mount and whenever the Register tab becomes active, fetch
-  // the user's existing donor record (if any) so a refresh doesn't drop
-  // them back into the registration form.
-  async function bootstrapRegistration() {
-    try {
-      const res = await apiRequest(ENDPOINTS.myDonation, { auth: true });
-      if (res?.success && res?.data) {
-        setDonorProfile(res.data);
-      } else {
-        setDonorProfile(null);
-      }
-    } catch {
-      // Silent — 404 / network errors fall through to the registration form.
-      setDonorProfile(null);
-    } finally {
-      setRegisterBootstrapped(true);
-    }
-  }
-
-  async function loadMyDonation() {
-    setUpdateLoadingRecord(true);
-    setUpdateRecordMessage("");
-    try {
-      const res = await apiRequest(ENDPOINTS.myDonation, { auth: true });
-      if (res?.success && res?.data) {
-        setMyDonation(res.data);
-        setUpdateDate(res.data.lastdate || "");
-      } else {
-        setMyDonation(null);
-        setUpdateRecordMessage(res?.message ?? "No donor record found. Please register first.");
-      }
-    } catch (err) {
-      setMyDonation(null);
-      setUpdateRecordMessage(getErrorMessage(err));
-    } finally {
-      setUpdateLoadingRecord(false);
-    }
-  }
-
-  useEffect(() => {
-    if (activeTab === "register") bootstrapRegistration();
-    if (activeTab === "update") loadMyDonation();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTab]);
-
-  async function handleUpdateDate(e) {
-    e.preventDefault();
-    if (!updateDate) {
-      setUpdateAlert({ type: "error", message: "Please pick a date." });
-      return;
-    }
-    setUpdateLoading(true);
-    setUpdateAlert({ type: "", message: "" });
-    try {
-      const res = await apiRequest(ENDPOINTS.updateDonationDate, {
-        method: "PUT",
-        body: { lastdate: updateDate },
-        auth: true,
-      });
-      if (res?.success) {
-        setUpdateAlert({ type: "success", message: res.message ?? "Donation date updated." });
-        setMyDonation((prev) => (prev ? { ...prev, lastdate: updateDate } : prev));
-      } else {
-        setUpdateAlert({ type: "error", message: res?.message ?? "Failed to update date." });
-      }
-    } catch (err) {
-      setUpdateAlert({ type: "error", message: getErrorMessage(err) });
-    } finally {
-      setUpdateLoading(false);
-    }
-  }
 
   async function handleRegister(e) {
     e.preventDefault();
@@ -174,7 +90,7 @@ export default function BloodDonor() {
   return (
     <>
       <Navbar />
-      <div className="container">
+      <div className="container donor-page">
         <div className="page-header">
           <p className="section-eyebrow role-patient">Patient Portal</p>
           <h1 className="page-title">Blood Donor</h1>
@@ -187,7 +103,8 @@ export default function BloodDonor() {
             className={`tab-btn ${activeTab === "register" ? "active" : ""}`}
             onClick={() => setActiveTab("register")}
           >
-            🩸 Register as Donor
+            <i className="bi bi-droplet-fill" style={{ marginRight: 6 }}></i>
+            Register as Donor
           </button>
           <button
             className={`tab-btn ${activeTab === "search" ? "active" : ""}`}
@@ -198,27 +115,17 @@ export default function BloodDonor() {
               setSearchedOnce(false);
             }}
           >
-            🔍 Find Donors
-          </button>
-          <button
-            className={`tab-btn ${activeTab === "update" ? "active" : ""}`}
-            onClick={() => {
-              setActiveTab("update");
-              setUpdateAlert({ type: "", message: "" });
-            }}
-          >
-            📅 Update Donation Date
+            <i className="bi bi-search" style={{ marginRight: 6 }}></i>
+            Find Donors
           </button>
         </div>
 
         {activeTab === "register" && (
           <div className="tab-panel form-max-width">
-            {!registerBootstrapped ? (
-              <p className="search-meta">Checking your donor record…</p>
-            ) : donorProfile ? (
+            {donorProfile ? (
               <>
                 <div className="donor-info-strip">
-                  <span className="donor-info-strip__icon">🩸</span>
+                  <span className="donor-info-strip__icon"><i className="bi bi-droplet-fill"></i></span>
                   <div>
                     <p className="donor-info-strip__label">Donor Status</p>
                     <p className="donor-info-strip__value">Registered</p>
@@ -258,7 +165,7 @@ export default function BloodDonor() {
               <>
                 {user?.blood_group && (
                   <div className="donor-info-strip">
-                    <span className="donor-info-strip__icon">🩸</span>
+                    <span className="donor-info-strip__icon"><i className="bi bi-droplet-fill"></i></span>
                     <div>
                       <p className="donor-info-strip__label">Your Blood Group</p>
                       <p className="donor-info-strip__value">{user.blood_group}</p>
@@ -364,66 +271,6 @@ export default function BloodDonor() {
                     </table>
                   </div>
                 )}
-              </>
-            )}
-          </div>
-        )}
-
-        {activeTab === "update" && (
-          <div className="tab-panel form-max-width">
-            {updateLoadingRecord ? (
-              <p className="search-meta">Loading your donor record…</p>
-            ) : !myDonation ? (
-              <>
-                <div className="alert alert-error">{updateRecordMessage || "No donor record found. Please register first."}</div>
-                <button
-                  type="button"
-                  className="btn btn-outline"
-                  onClick={() => setActiveTab("register")}
-                >
-                  Go to Register
-                </button>
-              </>
-            ) : (
-              <>
-                <div className="donor-info-strip">
-                  <span className="donor-info-strip__icon">🩸</span>
-                  <div>
-                    <p className="donor-info-strip__label">Your Last Donation</p>
-                    <p className="donor-info-strip__value">
-                      {myDonation.lastdate
-                        ? new Date(myDonation.lastdate).toLocaleDateString()
-                        : "Not set"}
-                    </p>
-                  </div>
-                </div>
-
-                {updateAlert.message && (
-                  <div className={`alert ${updateAlert.type === "success" ? "alert-success" : "alert-error"}`}>
-                    {updateAlert.message}
-                  </div>
-                )}
-
-                <form onSubmit={handleUpdateDate}>
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="update_lastdate">New Last Donation Date</label>
-                    <input
-                      id="update_lastdate"
-                      type="date"
-                      className="form-control"
-                      value={updateDate}
-                      onChange={(e) => setUpdateDate(e.target.value)}
-                      max={new Date().toISOString().split("T")[0]}
-                    />
-                    <p className="form-hint">
-                      Update the date whenever you donate again — keeps your donor record accurate.
-                    </p>
-                  </div>
-
-                  <button type="submit" className="btn btn-primary" disabled={updateLoading}>
-                    {updateLoading ? "Updating…" : "Update Date"}
-                  </button>
-                </form>
               </>
             )}
           </div>

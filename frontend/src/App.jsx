@@ -2,11 +2,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Footer from "./components/Footer";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
+import AboutUs from "./pages/AboutUs";
 
 // Patient pages
 import PatientDashboard from "./pages/patient/PatientDashboard";
@@ -22,7 +24,6 @@ import MyAppointments from "./pages/patient/MyAppointments";
 import DoctorDashboard from "./pages/doctor/DoctorDashboard";
 import WritePrescription from "./pages/doctor/WritePrescription";
 import PatientHistory from "./pages/doctor/PatientHistory";
-import PatientHistoryList from "./pages/doctor/PatientHistoryList";
 import DoctorChat from "./pages/doctor/DoctorChat";
 
 // Placeholder dashboards (create these files — see instructions below)
@@ -62,6 +63,7 @@ export default function App() {
             <Route path="/" element={<HomeRedirect />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/about" element={<AboutUs />} />
 
             {/* Patient */}
             <Route path="/patient" element={
@@ -99,9 +101,6 @@ export default function App() {
             <Route path="/doctor/patient/:patientId" element={
               <ProtectedRoute allowedRoles={["doctor"]}><PatientHistory /></ProtectedRoute>
             } />
-            <Route path="/doctor/patient-history" element={
-              <ProtectedRoute allowedRoles={["doctor"]}><PatientHistoryList /></ProtectedRoute>
-            } />
             <Route path="/doctor/chat" element={
               <ProtectedRoute allowedRoles={["doctor"]}><DoctorChat /></ProtectedRoute>
             } />
@@ -129,6 +128,7 @@ export default function App() {
               <ProtectedRoute allowedRoles={["admin"]}><AdminDonors /></ProtectedRoute>
             } />
           </Routes>
+          <Footer />
         </RoleWrapper>
       </BrowserRouter>
     </AuthProvider>
