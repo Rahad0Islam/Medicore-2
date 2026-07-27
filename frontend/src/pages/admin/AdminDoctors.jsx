@@ -124,7 +124,7 @@ export default function AdminDoctors() {
           <p className="page-subtitle">Loading doctors…</p>
         ) : doctors.length === 0 ? (
           <div className="card empty-state">
-            <p className="empty-state__icon">🩺</p>
+            <p className="empty-state__icon"><i className="bi bi-heart-pulse-fill"></i></p>
             <p>
               {tab === "pending"
                 ? "No doctors are awaiting approval."

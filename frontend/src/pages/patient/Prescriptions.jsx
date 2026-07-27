@@ -34,7 +34,7 @@ export default function Prescriptions() {
           <p className="page-subtitle">Loading prescriptions…</p>
         ) : prescriptions.length === 0 ? (
           <div className="card empty-state">
-            <p className="empty-state__icon">📄</p>
+            <p className="empty-state__icon"><i className="bi bi-file-earmark-text-fill"></i></p>
             <p>No prescriptions found.</p>
           </div>
         ) : (

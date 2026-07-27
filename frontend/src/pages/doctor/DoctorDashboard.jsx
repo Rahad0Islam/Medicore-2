@@ -186,10 +186,10 @@ export default function DoctorDashboard() {
 
         {/* ── Metric tiles ── */}
         <div className="doctor-metrics" style={{ marginTop: 8 }}>
-          <MetricTile tone="orange" icon="🕒" label="Pending"    value={metrics.pending}    loading={loading} />
-          <MetricTile tone="green"  icon="✅" label="Completed"  value={metrics.completed}  loading={loading} />
-          <MetricTile tone="purple" icon="👥" label="Patients"   value={metrics.patients}   loading={loading} />
-          <MetricTile tone="pink"   icon="📋" label="Total"      value={metrics.total}      loading={loading} />
+          <MetricTile tone="orange" icon={<i className="bi bi-clock-history"></i>} label="Pending"    value={metrics.pending}    loading={loading} />
+          <MetricTile tone="green"  icon={<i className="bi bi-check-circle-fill"></i>} label="Completed"  value={metrics.completed}  loading={loading} />
+          <MetricTile tone="purple" icon={<i className="bi bi-people-fill"></i>} label="Patients"   value={metrics.patients}   loading={loading} />
+          <MetricTile tone="pink"   icon={<i className="bi bi-clipboard2-pulse"></i>} label="Total"      value={metrics.total}      loading={loading} />
         </div>
 
         {/* ── Date filter (calendar) ── */}

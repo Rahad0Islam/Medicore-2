@@ -31,19 +31,19 @@ const NAV_CARDS = [
     to: "/admin/doctors",
     title: "Doctor Approvals",
     description: "Review pending doctors, approve credentials, manage the doctor directory.",
-    icon: "🩺",
+    icon: <i className="bi bi-heart-pulse-fill"></i>,
   },
   {
     to: "/admin/users",
     title: "User Management",
     description: "View all users and remove accounts from the platform.",
-    icon: "👥",
+    icon: <i className="bi bi-people-fill"></i>,
   },
   {
     to: "/admin/donors",
     title: "Blood Donors",
     description: "Oversee the donor registry, filter by blood group, remove outdated entries.",
-    icon: "🩸",
+    icon: <i className="bi bi-droplet-fill"></i>,
   },
 ];
 

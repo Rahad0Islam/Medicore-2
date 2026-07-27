@@ -127,7 +127,7 @@ export default function BookAppointment() {
         {/* ── Search ── */}
         <div className="docbook-toolbar">
           <div className="docbook-search">
-            <span className="docbook-search__icon">🔍</span>
+            <span className="docbook-search__icon"><i className="bi bi-search"></i></span>
             <input
               className="form-control"
               placeholder="Search Doctor"

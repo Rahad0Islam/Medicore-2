@@ -80,7 +80,7 @@ function PharmacistHeader({ user, pharmacyName, totalMeds }) {
 
       <div className="doctor-profile-actions">
         <Link to="/pharmacist/profile" className="btn btn-outline btn-sm">
-          ⚙️ Pharmacy Profile
+          <i className="bi bi-gear-fill" style={{ marginRight: 6 }}></i>Pharmacy Profile
         </Link>
       </div>
     </div>
@@ -143,7 +143,7 @@ function MedicineRow({ med, onEditDetails, onUpdateStock, onDelete }) {
             onClick={() => onUpdateStock(med)}
             title="Update stock quantity for this medicine"
           >
-            📦 Update Stock
+            <i className="bi bi-box-seam" style={{ marginRight: 6 }}></i>Update Stock
           </button>
           <button
             type="button"
@@ -151,7 +151,7 @@ function MedicineRow({ med, onEditDetails, onUpdateStock, onDelete }) {
             onClick={() => onEditDetails(med)}
             title="Edit name, price, category, manufacturer, expiry"
           >
-            ✏️ Edit
+            <i className="bi bi-pencil-fill" style={{ marginRight: 6 }}></i>Edit
           </button>
           <button
             type="button"
@@ -159,7 +159,7 @@ function MedicineRow({ med, onEditDetails, onUpdateStock, onDelete }) {
             onClick={() => onDelete(med)}
             title="Remove from inventory"
           >
-            🗑
+            <i className="bi bi-trash-fill"></i>
           </button>
         </div>
       </div>
@@ -443,11 +443,11 @@ function InventoryTab({
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20, marginBottom: 12, gap: 12, flexWrap: "wrap" }}>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           <button type="button" className="btn btn-outline btn-sm" onClick={onRefresh}>
-            ↻ Refresh
+            <i className="bi bi-arrow-clockwise" style={{ marginRight: 6 }}></i>Refresh
           </button>
         </div>
         <button type="button" className="btn btn-primary btn-sm" onClick={onAdd}>
-          ➕ Add medicine
+          <i className="bi bi-plus-lg" style={{ marginRight: 6 }}></i>Add medicine
         </button>
       </div>
 
@@ -455,10 +455,10 @@ function InventoryTab({
 
       {/* Metric tiles */}
       <div className="doctor-metrics">
-        <MetricTile tone="purple" icon="💊" label="Total medicines" value={metrics.total}       loading={loading} />
-        <MetricTile tone="orange" icon="⚠️" label="Low stock"      value={metrics.low}         loading={loading} />
-        <MetricTile tone="pink"   icon="🚫" label="Out of stock"   value={metrics.out}         loading={loading} />
-        <MetricTile tone="green"  icon="🏷" label="Categories"     value={metrics.categories}  loading={loading} />
+        <MetricTile tone="purple" icon={<i className="bi bi-capsule"></i>} label="Total medicines" value={metrics.total}       loading={loading} />
+        <MetricTile tone="orange" icon={<i className="bi bi-exclamation-triangle-fill"></i>} label="Low stock"      value={metrics.low}         loading={loading} />
+        <MetricTile tone="pink"   icon={<i className="bi bi-x-circle-fill"></i>} label="Out of stock"   value={metrics.out}         loading={loading} />
+        <MetricTile tone="green"  icon={<i className="bi bi-tag-fill"></i>} label="Categories"     value={metrics.categories}  loading={loading} />
       </div>
 
       {/* List */}
@@ -578,7 +578,7 @@ function SearchPrescriptionTab() {
             disabled={searching}
             style={{ alignSelf: "stretch" }}
           >
-            {searching ? "Searching…" : "🔍 Search"}
+            {searching ? "Searching…" : <><i className="bi bi-search" style={{ marginRight: 6 }}></i>Search</>}
           </button>
         </form>
 
@@ -850,10 +850,10 @@ export default function PharmacistDashboard() {
           }}
         >
           <TabButton active={tab === "inventory"} onClick={() => setTab("inventory")}>
-            💊 Medicines in stock
+            <i className="bi bi-capsule" style={{ marginRight: 6 }}></i>Medicines in stock
           </TabButton>
           <TabButton active={tab === "search"} onClick={() => setTab("search")}>
-            🔍 Search Prescription
+            <i className="bi bi-search" style={{ marginRight: 6 }}></i>Search Prescription
           </TabButton>
         </div>
 
