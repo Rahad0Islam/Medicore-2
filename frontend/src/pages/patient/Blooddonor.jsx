@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Navbar from "../../components/Navbar";
 import { apiRequest, getErrorMessage } from "../../api/client";
 import { ENDPOINTS } from "../../api/endpoints";
@@ -6,13 +6,40 @@ import { useAuth } from "../../context/AuthContext";
 
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
+// Standard gap required between whole-blood donations. Adjust here if the
+// blood bank's policy differs.
+const DONATION_COOLDOWN_MONTHS = 4;
+
+function monthsBetween(fromDateStr, toDate) {
+  const from = new Date(fromDateStr);
+  if (Number.isNaN(from.getTime())) return Infinity;
+  let months = (toDate.getFullYear() - from.getFullYear()) * 12 + (toDate.getMonth() - from.getMonth());
+  if (toDate.getDate() < from.getDate()) months -= 1;
+  return months;
+}
+
+function addMonths(dateStr, months) {
+  const d = new Date(dateStr);
+  d.setMonth(d.getMonth() + months);
+  return d;
+}
+
+function formatDate(d) {
+  if (!d) return "—";
+  const date = d instanceof Date ? d : new Date(d);
+  if (Number.isNaN(date.getTime())) return "—";
+  return date.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+}
+
 export default function BloodDonor() {
   const { user } = useAuth();
 
   const [lastdate, setLastdate] = useState("");
   const [registerLoading, setRegisterLoading] = useState(false);
   const [registerAlert, setRegisterAlert] = useState({ type: "", message: "" });
+
   const [donorProfile, setDonorProfile] = useState(null);
+  const [statusLoading, setStatusLoading] = useState(true);
 
   const [bloodGroup, setBloodGroup] = useState("");
   const [donors, setDonors] = useState([]);
@@ -21,6 +48,32 @@ export default function BloodDonor() {
   const [searchedOnce, setSearchedOnce] = useState(false);
 
   const [activeTab, setActiveTab] = useState("register");
+
+  const loadStatus = useCallback(async () => {
+    setStatusLoading(true);
+    try {
+      const res = await apiRequest(ENDPOINTS.myDonation, { auth: true });
+      const data = res?.data ?? (res && res.lastdate ? res : null);
+      if (res?.success === false || !data || !data.lastdate) {
+        setDonorProfile(null);
+      } else {
+        setDonorProfile(data);
+      }
+    } catch {
+      setDonorProfile(null);
+    } finally {
+      setStatusLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadStatus();
+  }, [loadStatus]);
+
+  const monthsSinceLast = donorProfile?.lastdate ? monthsBetween(donorProfile.lastdate, new Date()) : null;
+  const isEligibleAgain = monthsSinceLast === null ? true : monthsSinceLast >= DONATION_COOLDOWN_MONTHS;
+  const nextEligibleDate = donorProfile?.lastdate ? addMonths(donorProfile.lastdate, DONATION_COOLDOWN_MONTHS) : null;
+  const isReturningDonor = !!donorProfile;
 
   async function handleRegister(e) {
     e.preventDefault();
@@ -33,27 +86,31 @@ export default function BloodDonor() {
     setRegisterLoading(true);
 
     try {
-      const res = await apiRequest(ENDPOINTS.donorRegister, {
+      const endpoint = isReturningDonor ? ENDPOINTS.updateDonationDate : ENDPOINTS.donorRegister;
+      const res = await apiRequest(endpoint, {
         method: "POST",
         body: { lastdate },
         auth: true,
       });
       if (res.success) {
         setDonorProfile(res.data ?? {
-          bloodBankId: "—",
+          bloodBankId: donorProfile?.bloodBankId ?? "—",
           name: user?.name ?? "Donor",
           contactNo: user?.contactNo ?? "—",
           donorId: user?.id ?? user?._id ?? "—",
           lastdate,
-          bloodgroup: user?.blood_group ?? "—",
+          bloodgroup: user?.blood_group ?? donorProfile?.bloodgroup ?? "—",
         });
-        setRegisterAlert({ type: "success", message: res.message ?? "Donor profile registered successfully!" });
+        setRegisterAlert({
+          type: "success",
+          message: res.message ?? (isReturningDonor ? "Donation date updated — thank you!" : "Donor profile registered successfully!"),
+        });
         setLastdate("");
       } else {
         setRegisterAlert({ type: "error", message: res.message ?? "Registration failed." });
       }
-    } catch {
-      setRegisterAlert({ type: "error", message: "Network error. Please try again." });
+    } catch (err) {
+      setRegisterAlert({ type: "error", message: getErrorMessage(err) });
     } finally {
       setRegisterLoading(false);
     }
@@ -122,83 +179,106 @@ export default function BloodDonor() {
 
         {activeTab === "register" && (
           <div className="tab-panel form-max-width">
-            {donorProfile ? (
-              <>
-                <div className="donor-info-strip">
-                  <span className="donor-info-strip__icon"><i className="bi bi-droplet-fill"></i></span>
-                  <div>
-                    <p className="donor-info-strip__label">Donor Status</p>
-                    <p className="donor-info-strip__value">Registered</p>
-                  </div>
-                </div>
-
-                {registerAlert.message && (
-                  <div className={`alert ${registerAlert.type === "success" ? "alert-success" : "alert-error"}`}>
-                    {registerAlert.message}
-                  </div>
-                )}
-
-                <div className="mc-table-wrap" style={{ marginTop: 8 }}>
-                  <table className="mc-table">
-                    <thead>
-                      <tr>
-                        <th>Blood Bank ID</th>
-                        <th>Name</th>
-                        <th>Blood Group</th>
-                        <th>Contact</th>
-                        <th>Last Donated</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>{donorProfile.bloodBankId}</td>
-                        <td>{donorProfile.name}</td>
-                        <td><span className="badge role-patient">{donorProfile.bloodgroup}</span></td>
-                        <td>{donorProfile.contactNo}</td>
-                        <td>{donorProfile.lastdate ? new Date(donorProfile.lastdate).toLocaleDateString() : "—"}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </>
+            {statusLoading ? (
+              <p className="page-subtitle">Checking your donor status…</p>
             ) : (
               <>
-                {user?.blood_group && (
+                {isReturningDonor && (
                   <div className="donor-info-strip">
                     <span className="donor-info-strip__icon"><i className="bi bi-droplet-fill"></i></span>
                     <div>
-                      <p className="donor-info-strip__label">Your Blood Group</p>
-                      <p className="donor-info-strip__value">{user.blood_group}</p>
+                      <p className="donor-info-strip__label">Donor Status</p>
+                      <p className="donor-info-strip__value">
+                        {isEligibleAgain ? "Registered — eligible to donate again" : "Registered — thank you!"}
+                      </p>
                     </div>
                   </div>
                 )}
 
                 {registerAlert.message && (
-                  <div className={`alert ${registerAlert.type === "success" ? "alert-success" : "alert-error"}`}>
+                  <div className={`alert ${registerAlert.type === "success" ? "alert-success" : "alert-error"}`} style={{ marginTop: isReturningDonor ? 12 : 0 }}>
                     {registerAlert.message}
                   </div>
                 )}
 
-                <form onSubmit={handleRegister}>
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="lastdate">Last Donation Date</label>
-                    <input
-                      id="lastdate"
-                      type="date"
-                      className="form-control"
-                      value={lastdate}
-                      onChange={(e) => setLastdate(e.target.value)}
-                      max={new Date().toISOString().split("T")[0]}
-                    />
-                    <p className="form-hint">
-                      Enter when you last donated blood, or today if this is your first time.
-                    </p>
-                  </div>
+                {isReturningDonor && !isEligibleAgain ? (
+                  <>
+                    <div className="alert alert-info" style={{ marginTop: 12 }}>
+                      <i className="bi bi-hourglass-split" style={{ marginRight: 8 }}></i>
+                      Your last donation was on {formatDate(donorProfile.lastdate)}. Since blood needs about
+                      {" "}{DONATION_COOLDOWN_MONTHS} months to fully replenish, you can register again on{" "}
+                      <strong>{formatDate(nextEligibleDate)}</strong>.
+                    </div>
 
-                  <button type="submit" className="btn btn-primary" disabled={registerLoading}>
-                    {registerLoading ? "Registering…" : "Register as Donor"}
-                  </button>
-                </form>
+                    <div className="mc-table-wrap" style={{ marginTop: 16 }}>
+                      <table className="mc-table">
+                        <thead>
+                          <tr>
+                            <th>Blood Bank ID</th>
+                            <th>Name</th>
+                            <th>Blood Group</th>
+                            <th>Contact</th>
+                            <th>Last Donated</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>{donorProfile.bloodBankId}</td>
+                            <td>{donorProfile.name}</td>
+                            <td><span className="badge role-patient">{donorProfile.bloodgroup}</span></td>
+                            <td>{donorProfile.contactNo}</td>
+                            <td>{formatDate(donorProfile.lastdate)}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {isReturningDonor && isEligibleAgain && (
+                      <div className="alert alert-success" style={{ marginTop: 12, marginBottom: 4 }}>
+                        <i className="bi bi-check-circle-fill" style={{ marginRight: 8 }}></i>
+                        It's been {monthsSinceLast} month{monthsSinceLast !== 1 ? "s" : ""} since your last donation —
+                        you're eligible to update your record whenever you donate again.
+                      </div>
+                    )}
+
+                    {!isReturningDonor && user?.blood_group && (
+                      <div className="donor-info-strip">
+                        <span className="donor-info-strip__icon"><i className="bi bi-droplet-fill"></i></span>
+                        <div>
+                          <p className="donor-info-strip__label">Your Blood Group</p>
+                          <p className="donor-info-strip__value">{user.blood_group}</p>
+                        </div>
+                      </div>
+                    )}
+
+                    <form onSubmit={handleRegister}>
+                      <div className="form-group">
+                        <label className="form-label" htmlFor="lastdate">Last Donation Date</label>
+                        <input
+                          id="lastdate"
+                          type="date"
+                          className="form-control"
+                          value={lastdate}
+                          onChange={(e) => setLastdate(e.target.value)}
+                          max={new Date().toISOString().split("T")[0]}
+                        />
+                        <p className="form-hint">
+                          {isReturningDonor
+                            ? "Enter the date of your most recent donation to update your record."
+                            : "Enter when you last donated blood, or today if this is your first time."}
+                        </p>
+                      </div>
+
+                      <button type="submit" className="btn btn-primary" disabled={registerLoading}>
+                        {registerLoading
+                          ? (isReturningDonor ? "Updating…" : "Registering…")
+                          : (isReturningDonor ? "Update Donation Date" : "Register as Donor")}
+                      </button>
+                    </form>
+                  </>
+                )}
               </>
             )}
           </div>

@@ -235,7 +235,7 @@ export default function DoctorChat() {
             </div>
 
             <div className="messenger-search">
-              <span className="messenger-search__icon" aria-hidden>🔍</span>
+              <span className="messenger-search__icon" aria-hidden><i className="bi bi-search"></i></span>
               <input
                 type="text"
                 className="messenger-search__input"
@@ -288,7 +288,7 @@ export default function DoctorChat() {
                               <span className="messenger-contact__preview">
                                 {preview?.text
                                   ? (preview.text.length > 32 ? preview.text.slice(0, 32) + "…" : preview.text)
-                                  : (p.phone ? `📞 ${p.phone}` : "Tap to start chatting")}
+                                  : (p.phone ? <><i className="bi bi-telephone-fill" style={{ marginRight: 4 }}></i>{p.phone}</> : "Tap to start chatting")}
                               </span>
                             </div>
                           </div>
@@ -305,7 +305,7 @@ export default function DoctorChat() {
           <section className="messenger-thread">
             {!selectedPatientId ? (
               <div className="messenger-thread__empty">
-                <div className="messenger-thread__empty-icon" aria-hidden>💬</div>
+                <div className="messenger-thread__empty-icon" aria-hidden><i className="bi bi-chat-dots"></i></div>
                 <p className="messenger-thread__empty-text">
                   Select a patient from the left to start a conversation.
                 </p>
@@ -323,7 +323,7 @@ export default function DoctorChat() {
                   <div className="messenger-thread__title">
                     <p className="messenger-thread__name">{selectedPatient?.name ?? "Patient"}</p>
                     <p className="messenger-thread__status">
-                      {selectedPatient?.phone ? `📞 ${selectedPatient.phone}` : "Patient"}
+                      {selectedPatient?.phone ? <><i className="bi bi-telephone-fill" style={{ marginRight: 4 }}></i>{selectedPatient.phone}</> : "Patient"}
                     </p>
                   </div>
                 </header>
@@ -403,7 +403,7 @@ export default function DoctorChat() {
                 </div>
 
                 <form className="messenger-input" onSubmit={handleSend}>
-                  <span className="messenger-input__icon" aria-hidden>📎</span>
+                  <span className="messenger-input__icon" aria-hidden><i className="bi bi-paperclip"></i></span>
                   <input
                     type="text"
                     className="messenger-input__field"
@@ -413,7 +413,7 @@ export default function DoctorChat() {
                     disabled={sending}
                   />
                   <button type="submit" className="messenger-input__send" disabled={!newMessage.trim() || sending} aria-label="Send">
-                    ➤
+                    <i className="bi bi-send-fill"></i>
                   </button>
                 </form>
               </>

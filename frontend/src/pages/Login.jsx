@@ -160,7 +160,7 @@ export default function Login() {
           </p>
           <p style={{ marginTop: 12, textAlign: "center", fontSize: 13 }}>
             <Link to="/" style={{ color: "var(--text-light)", textDecoration: "none" }}>
-              ← Back to home
+              <i className="bi bi-arrow-left" style={{ marginRight: 6 }}></i>Back to home
             </Link>
           </p>
         </div>

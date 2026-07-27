@@ -128,7 +128,7 @@ export default function AdminDonors() {
           <p className="page-subtitle">Loading donors…</p>
         ) : filtered.length === 0 ? (
           <div className="card empty-state">
-            <p className="empty-state__icon">🩸</p>
+            <p className="empty-state__icon"><i className="bi bi-droplet-fill"></i></p>
             <p>
               {search
                 ? "No donors match your search."

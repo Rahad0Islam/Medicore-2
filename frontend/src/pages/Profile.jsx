@@ -255,7 +255,11 @@ function DoctorProfile({ user }) {
                         : "Awaiting admin review — patients can't book you yet"
                     }
                   >
-                    {saved.approval ? "✓ Approved" : "⏳ Pending review"}
+                    {saved.approval ? (
+                      <><i className="bi bi-check-circle-fill" style={{ marginRight: 4 }}></i>Approved</>
+                    ) : (
+                      <><i className="bi bi-hourglass-split" style={{ marginRight: 4 }}></i>Pending review</>
+                    )}
                   </span>
                 )}
               </p>
@@ -263,20 +267,20 @@ function DoctorProfile({ user }) {
                 <p className="doctor-profile-qual">{saved.qualification}</p>
               )}
               {saved?.location && (
-                <p className="doctor-profile-loc">📍 {saved.location}</p>
+                <p className="doctor-profile-loc"><i className="bi bi-geo-alt-fill" style={{ marginRight: 4 }}></i>{saved.location}</p>
               )}
             </div>
           </div>
 
           <div className="doctor-profile-actions">
             <Link to="/doctor/chat" className="btn btn-outline btn-sm">
-              💬 Messages
+              <i className="bi bi-chat-dots-fill" style={{ marginRight: 6 }}></i>Messages
             </Link>
             <Link to="/doctor" className="btn btn-outline btn-sm">
-              📅 Queue
+              <i className="bi bi-calendar3" style={{ marginRight: 6 }}></i>Queue
             </Link>
             <button type="button" className="btn btn-primary btn-sm" onClick={openEdit}>
-              ✏️ Edit Profile
+              <i className="bi bi-pencil-square" style={{ marginRight: 6 }}></i>Edit Profile
             </button>
           </div>
         </div>
@@ -292,21 +296,21 @@ function DoctorProfile({ user }) {
         <div className="doctor-metrics">
           <MetricTile
             tone="purple"
-            icon="👥"
+            icon={<i className="bi bi-people-fill"></i>}
             label="Patients"
             value={metrics.patients}
             loading={loading}
           />
           <MetricTile
             tone="orange"
-            icon="📅"
+            icon={<i className="bi bi-calendar-event-fill"></i>}
             label="Appointments"
             value={metrics.appointments}
             loading={loading}
           />
           <MetricTile
             tone="pink"
-            icon="❤"
+            icon={<i className="bi bi-heart-pulse-fill"></i>}
             label="Treatments"
             value={metrics.treatments}
             loading={loading}
@@ -357,7 +361,7 @@ function DoctorProfile({ user }) {
                             to={`/doctor/prescriptions/${a.prescriptionID}`}
                             className="doctor-appt-link"
                           >
-                            Open →
+                            Open <i className="bi bi-arrow-right-short"></i>
                           </Link>
                         )}
                       </div>
@@ -385,7 +389,7 @@ function DoctorProfile({ user }) {
                 to="/doctor/patient-history"
                 className="btn btn-primary btn-sm"
               >
-                Open Patient History →
+                Open Patient History <i className="bi bi-arrow-right-short"></i>
               </Link>
               <Link to="/doctor" className="btn btn-outline btn-sm">
                 Back to queue
@@ -395,7 +399,7 @@ function DoctorProfile({ user }) {
         </div>
 
         <p className="doctor-footnote">
-          💡 Tip: completed appointments appear in your patient history automatically.
+          <i className="bi bi-lightbulb" style={{ marginRight: 6 }}></i>Tip: completed appointments appear in your patient history automatically.
         </p>
       </div>
 
@@ -600,7 +604,7 @@ function PharmacistProfile({ user }) {
             color: "var(--accent)", fontWeight: 500, textDecoration: "none",
           }}
         >
-          ← Back to dashboard
+          <i className="bi bi-arrow-left" style={{ marginRight: 6 }}></i>Back to dashboard
         </Link>
       </div>
     </>

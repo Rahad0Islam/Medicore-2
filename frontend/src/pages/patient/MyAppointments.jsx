@@ -123,7 +123,7 @@ export default function MyAppointments() {
 
         {fetchedOnce && !loading && !error && appointments.length === 0 && (
           <div className="card empty-state">
-            <p className="empty-state__icon">📅</p>
+            <p className="empty-state__icon"><i className="bi bi-calendar3"></i></p>
             <p>You have no appointments yet.</p>
             <Link to="/patient/book" className="btn btn-primary" style={{ marginTop: 12 }}>
               Book your first appointment

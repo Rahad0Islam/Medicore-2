@@ -117,7 +117,7 @@ export default function PatientHistoryList() {
               Everyone you've ever seen — pick a patient to open their full record.
             </p>
           </div>
-          <Link to="/doctor" className="btn btn-outline btn-sm">← Back to queue</Link>
+          <Link to="/doctor" className="btn btn-outline btn-sm"><i className="bi bi-arrow-left" style={{ marginRight: 6 }}></i>Back to queue</Link>
         </div>
 
         <div className="card-sm" style={{ marginBottom: 16, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>

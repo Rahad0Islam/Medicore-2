@@ -36,7 +36,7 @@ export default function PatientHistory() {
             <h2 className="mb-0">Patient History</h2>
             <p className="text-muted mb-0">Patient ID: {patientId}</p>
           </div>
-          <Link to="/doctor" className="btn btn-outline-secondary btn-sm">← Back to queue</Link>
+          <Link to="/doctor" className="btn btn-outline-secondary btn-sm"><i className="bi bi-arrow-left" style={{ marginRight: 6 }}></i>Back to queue</Link>
         </div>
 
         {loading && <p>Loading...</p>}

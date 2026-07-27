@@ -218,7 +218,7 @@ export default function Chat() {
             </div>
 
             <div className="messenger-search">
-              <span className="messenger-search__icon" aria-hidden>🔍</span>
+              <span className="messenger-search__icon" aria-hidden><i className="bi bi-search"></i></span>
               <input
                 type="text"
                 className="messenger-search__input"
@@ -292,7 +292,7 @@ export default function Chat() {
           <section className="messenger-thread">
             {!selectedDoctorId ? (
               <div className="messenger-thread__empty">
-                <div className="messenger-thread__empty-icon" aria-hidden>💬</div>
+                <div className="messenger-thread__empty-icon" aria-hidden><i className="bi bi-chat-dots"></i></div>
                 <p className="messenger-thread__empty-text">
                   Select a doctor from the left to start a conversation.
                 </p>
@@ -393,7 +393,7 @@ export default function Chat() {
                 </div>
 
                 <form className="messenger-input" onSubmit={handleSend}>
-                  <span className="messenger-input__icon" aria-hidden>📎</span>
+                  <span className="messenger-input__icon" aria-hidden><i className="bi bi-paperclip"></i></span>
                   <input
                     type="text"
                     className="messenger-input__field"
@@ -403,7 +403,7 @@ export default function Chat() {
                     disabled={sending}
                   />
                   <button type="submit" className="messenger-input__send" disabled={!newMessage.trim() || sending} aria-label="Send">
-                    ➤
+                    <i className="bi bi-send-fill"></i>
                   </button>
                 </form>
               </>

@@ -127,7 +127,7 @@ export default function AdminUsers() {
           <p className="page-subtitle">Loading users…</p>
         ) : filtered.length === 0 ? (
           <div className="card empty-state">
-            <p className="empty-state__icon">👥</p>
+            <p className="empty-state__icon"><i className="bi bi-people-fill"></i></p>
             <p>{search || roleFilter !== "all" ? "No users match your filters." : "No users registered yet."}</p>
           </div>
         ) : (

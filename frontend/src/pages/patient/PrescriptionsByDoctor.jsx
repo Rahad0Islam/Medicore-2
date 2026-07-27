@@ -98,7 +98,7 @@ export default function PrescriptionsByDoctor() {
 
             {prescriptions.length === 0 ? (
               <div className="card empty-state">
-                <p className="empty-state__icon">📄</p>
+                <p className="empty-state__icon"><i className="bi bi-file-earmark-text-fill"></i></p>
                 <p>No prescriptions found for this doctor.</p>
               </div>
             ) : (

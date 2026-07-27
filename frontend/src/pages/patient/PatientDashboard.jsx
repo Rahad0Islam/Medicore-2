@@ -6,37 +6,37 @@ import Navbar from "../../components/Navbar";
 const CARDS = [
   {
     to: "/patient/doctors",
-    icon: "🩺",
+    icon: <i className="bi bi-heart-pulse-fill"></i>,
     title: "Find a Doctor",
     desc: "Browse and filter approved doctors by specialization or location.",
   },
   {
     to: "/patient/book",
-    icon: "📅",
+    icon: <i className="bi bi-calendar-event-fill"></i>,
     title: "Book Appointment",
     desc: "Schedule a visit and get your serial number instantly.",
   },
   {
     to: "/patient/appointments",
-    icon: "🗓️",
+    icon: <i className="bi bi-calendar3"></i>,
     title: "My Appointments",
     desc: "View all appointments you have booked in one place.",
   },
   {
     to: "/patient/prescriptions",
-    icon: "📄",
+    icon: <i className="bi bi-file-earmark-text-fill"></i>,
     title: "My Prescriptions",
     desc: "View all prescriptions issued to you, with medicine details.",
   },
   {
     to: "/patient/chat",
-    icon: "💬",
+    icon: <i className="bi bi-chat-dots-fill"></i>,
     title: "Chat with Doctor",
     desc: "Send messages directly to your doctor.",
   },
   {
     to: "/patient/donors",
-    icon: "🩸",
+    icon: <i className="bi bi-droplet-fill"></i>,
     title: "Blood Donors",
     desc: "Find compatible blood donors near you.",
   },
