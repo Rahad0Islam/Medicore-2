@@ -6,9 +6,12 @@
 import Navbar from "../components/Navbar";
 
 const TEAM = [
-  { name: "Teammate One", role: "Frontend & UI", github: "#", linkedin: "#" },
-  { name: "Teammate Two", role: "Backend & APIs", github: "#", linkedin: "#" },
-  { name: "Teammate Three", role: "Database & Auth", github: "#", linkedin: "#" },
+  { name: "Autanu Datta", role: "Backend & APIs", github: "https://github.com/AD-053" },
+  { name: "Taposh Kumer Ghosh", role: "Backend & APIs", github: "https://github.com/taposhkumer"},
+  { name: "Rahad Islam", role: "Backend, API, Database & Auth", github: "https://github.com/Rahad0Islam"},
+  {name: "Shyamali Das", role: "Frontend & UI/UX", github:"https://github.com/ShyamaliDas"},
+  {name: "Jannat Bhuiyan", role: "Frontend & UI/UX", github:"https://github.com/JannatBhuiyan63"},
+  {name: "Afia Farzana", role: "Frontend, UI/UX & Testing", github:"https://github.com/afiaFarzanaTasnim"}
 ];
 
 function initials(name) {
@@ -38,7 +41,7 @@ export default function AboutUs() {
             <span>for everyday care.</span>
           </h1>
           <p className="pub-hero-sub">
-            MediCore started as a Software Engineering lab project and grew
+            MediCore started as a Software Engineering lab project and we hope it grows
             into a full patient–doctor–pharmacist–admin platform. Here's who
             built it and why.
           </p>
@@ -88,9 +91,6 @@ export default function AboutUs() {
                 <div className="pub-team-socials">
                   <a href={member.github} aria-label={`${member.name} on GitHub`}>
                     <i className="bi bi-github"></i>
-                  </a>
-                  <a href={member.linkedin} aria-label={`${member.name} on LinkedIn`}>
-                    <i className="bi bi-linkedin"></i>
                   </a>
                 </div>
               </div>
