@@ -29,30 +29,40 @@ export default function AboutUs() {
       <Navbar />
 
       {/* ── INTRO ── */}
-      <section className="pub-hero" style={{ padding: "72px 0 56px" }}>
+      <section className="pub-hero pub-hero--about" style={{ padding: "88px 0 64px" }}>
+        <span className="pub-hero-blob pub-hero-blob--1" aria-hidden="true"></span>
+        <span className="pub-hero-blob pub-hero-blob--2" aria-hidden="true"></span>
+        <span className="pub-hero-blob pub-hero-blob--3" aria-hidden="true"></span>
+ 
         <div className="container">
-          <span className="pub-hero-eyebrow">
-            <i className="bi bi-info-circle-fill"></i>
-            About MediCore
-          </span>
-          <h1 className="pub-hero-title" style={{ fontSize: 40 }}>
-            Built by a small team,
-            <br />
-            <span>for everyday care.</span>
-          </h1>
-          <p className="pub-hero-sub">
-            MediCore started as a Software Engineering lab project and we hope it grows
-            into a full patient–doctor–pharmacist–admin platform. Here's who
-            built it and why.
-          </p>
+          <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 1 }}>
+            <span className="pub-hero-eyebrow">
+              <i className="bi bi-info-circle-fill"></i>
+              About MediCore
+            </span>
+            <h1 className="pub-hero-title" style={{ fontSize: 44, maxWidth: "none" }}>
+              Built by a small team,
+              <br />
+              <span>for everyday care.</span>
+            </h1>
+            <p className="pub-hero-sub" style={{ maxWidth: "none", margin: "0 auto" }}>
+              MediCore started as a Software Engineering lab project and we hope it grows
+              into a full patient-doctor-pharmacist-admin platform. Here's who
+              built it and why.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* ── MISSION / VISION ── */}
       <section className="pub-section">
         <div className="container">
-          <p className="pub-section-eyebrow">Our purpose</p>
-          <h2 className="pub-section-title">Mission &amp; Vision</h2>
+          <p className="pub-section-eyebrow" style={{textAlign: "center"}}>
+            Our purpose
+          </p>
+          <h2 className="pub-section-title" style={{ textAlign: "center" }}>
+            Mission &amp; Vision
+          </h2>
           <div className="pub-mv-grid" style={{ marginTop: 24 }}>
             <div className="pub-mv-card">
               <div className="pub-mv-card__title">Our Mission</div>
@@ -78,8 +88,10 @@ export default function AboutUs() {
       {/* ── TEAM ── */}
       <section className="pub-section pub-section-alt">
         <div className="container">
-          <p className="pub-section-eyebrow">Meet the builders</p>
-          <h2 className="pub-section-title" style={{ marginBottom: 32 }}>
+          <p className="pub-section-eyebrow" style={{textAlign: "center"}}>
+            Meet the builders
+          </p>
+          <h2 className="pub-section-title" style={{ textAlign: "center", marginBottom: 32 }}>
             The team behind MediCore
           </h2>
           <div className="pub-team-grid">

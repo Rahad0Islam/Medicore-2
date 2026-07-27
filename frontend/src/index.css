@@ -1779,6 +1779,29 @@ a { color: inherit; }
   .pub-hero-icon--1 { width: 78px; height: 78px; font-size: 28px; left: 60px; }
 }
 
+/* Centered-focus hero variant with floating translucent circles
+   (used on About — header + paragraph are the focus, no icons). */
+.pub-hero--about {
+  position: relative;
+  overflow: hidden;
+}
+.pub-hero-blob {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  background: var(--accent-light);
+  opacity: 0.6;
+  pointer-events: none;
+}
+.pub-hero-blob--1 { width: 320px; height: 320px; top: -140px; left: -100px; }
+.pub-hero-blob--2 { width: 220px; height: 220px; bottom: -110px; right: -60px; opacity: 0.5; }
+.pub-hero-blob--3 { width: 90px;  height: 90px;  top: 30%; right: 8%; border: 2px solid var(--accent); background: transparent; opacity: 0.35; }
+@media (max-width: 640px) {
+  .pub-hero-blob--1 { width: 220px; height: 220px; top: -100px; left: -80px; }
+  .pub-hero-blob--2 { width: 160px; height: 160px; bottom: -80px; right: -60px; }
+  .pub-hero-blob--3 { display: none; }
+}
+
 /* Icon badges (feature strip) */
 .pub-icon-badge {
   width: 40px;
@@ -1926,4 +1949,3 @@ a { color: inherit; }
 
 /* Blood donor page — bottom breathing room fix */
 .donor-page { padding-bottom: 3rem; }
-
