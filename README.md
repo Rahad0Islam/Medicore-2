@@ -200,7 +200,7 @@ A handful of endpoints in this document, such as the doctor directory search, th
 
 ## Architecture
 
-![MediCore architecture diagram](./docs/architecture.svg)
+![MediCore architecture diagram](./architecture.svg)
 
 The frontend talks to a single API gateway, which forwards each request to the appropriate microservice based on the request path. Every service reads from and writes to the same PostgreSQL database, hosted on Neon.
 
